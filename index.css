@@ -1,0 +1,72 @@
+body {
+    font-family: "Helvetica Neue", Helvetica, Arial, sans-serif;
+    font-size: 90%;
+    margin: auto;
+    position: relative;
+}
+
+path.domain {
+    stroke-width: 1px;
+    fill: none;
+    stroke: #333;
+}
+
+.axis path,
+.axis line {
+    fill: none;
+    stroke: #999;
+    shape-rendering: crispEdges;
+}
+
+line.slope-line {
+    stroke: #999;
+}
+
+path.workPolygon, path.learningPolygon {
+    stroke: #ffffff;
+    stroke-width: 2px;
+    cursor: pointer;
+}
+
+rect.timeline-rect {
+    fill: #555;
+    shape-rendering: crispEdges;
+}
+
+.year-separator {
+    fill: #777;
+    shape-rendering: crispEdges;
+}
+
+.tooltip {
+    border: 2px solid #999999;
+    -webkit-border-radius: 5px;
+    -moz-border-radius: 5px;
+    border-radius: 5px;
+    padding: 12px;
+    background-color: #ffffff;
+    font-size: 90%;
+}
+
+.tooltip .title {
+    padding-bottom: 8px;
+}
+
+.tooltip div {
+    margin-top: 2px;
+}
+
+.tooltip ul {
+    margin: 3px 0;
+}
+
+.slope-chart-label {
+    font-weight: 700;
+    font-size: 90%;
+    color: #333;
+}
+
+#placeTitle {
+    font-size: 85%;
+    color: #333;
+}

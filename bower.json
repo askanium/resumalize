@@ -1,0 +1,25 @@
+{
+  "name": "resumalize",
+  "main": "resumalize.js",
+  "authors": [
+    "Iulian Gulea <iulian.gulea@gmail.com>"
+  ],
+  "description": "Visualize your resume",
+  "moduleType": [],
+  "keywords": [
+    "resume",
+    "visualization"
+  ],
+  "license": "MIT",
+  "homepage": "programmingforkettles.com/resumalize",
+  "ignore": [
+    "**/.*",
+    "node_modules",
+    "bower_components",
+    "test",
+    "tests"
+  ],
+  "dependencies": {
+    "d3": "^3.5.16"
+  }
+}

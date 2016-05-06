@@ -1,0 +1,260 @@
+{
+	"work": [
+		{
+			"type": "paidJob",
+			"dateStart": "2015-01-05",
+			"dateEnd": "-",
+			"place": "Spark Research Labs",
+			"title": "Head of Technology",
+			"responsibilities": [
+				{
+					"title": "Product development",
+					"description": "Involved into the development process ",
+					"tech": {
+						"python": ["django", "django-rest-framework"],
+						"javascript": ["angular", "d3.js"],
+						"postgresql": [],
+						"git": [],
+						"aws": []
+					},
+					"achievements": "",
+					"type": "tech",
+					"skillsImproved": [],
+					"problemsAddressed": [],
+					"dateStart": "2015-01-05",
+					"dateEnd": "-"
+				}
+			]
+		},
+		{
+			"type": "paidJob",
+			"dateStart": "2010-05-01",
+			"dateEnd": "2015-01-05",
+			"place": "Orange Moldova S.A.",
+			"title": "Training & Quality of Sales Coordinator",
+			"keyFigures": ["1200+ hours of training", "1800+ people trained", "3 team-building events delivered"],
+			"responsibilities": [
+				{
+					"title": "Developed an internal Quality of Sales Dashboard",
+					"description": "The dashboard is a smart and interactive platform for internal use that served as a: tracking tool, quality evaluator, knowledge monitor, market share analyzer and training planner.",
+					"tech": {
+						"python": ["django"],
+						"javascript": ["jquery", "d3.js", "google charts"],
+						"mysql": []
+					},
+					"achievements": "The dashboard got adopted on the general management level and was used by the sales department employees and managers (over 300 people).",
+					"type": "tech",
+					"skillsImproved": [],
+					"problemsAddressed": ["provided qualitative interpretation of quantitative data", "simplified the reporting process", "optimized existing processes within the training team", "increased transparency in sales department"],
+					"dateStart": "2012-01-10",
+					"dateEnd": "2015-01-05"
+				},
+				{
+					"title": "Developed a desktop program that simplified search of the information regarding offers / procedures / processes and documents created in 5 years",
+					"description": "The program consisted of a user interface where the user entered some keywords and the program was searching for these keywords in an excel document that was updated with new keywords for every new information document published. This decision of using an excel doc was dictated by the requirement of not having a database and because of the fact that all the docs were in pdf format and searching through several hundreds of pdf files would last longer than needed. The result was a list of documents with matched keywords that the user could open from within the program.",
+					"tech": {
+						"java": ["javase"]
+					},
+					"achievements": "Initially the program was developed for the Training Team I was working in, but due to the fact that it was saving time when needed to search for some documents that were published more than 2 weeks ago and it was adopted by the whole sales network and used by over 300 employees.",
+					"type": "tech",
+					"skillsImproved": [],
+					"problemsAddressed": ["considerably reduced search time for documents", "optimized existing processes within the training team"],
+					"dateStart": "2010-09-01",
+					"dateEnd": "2011-06-01"
+				},
+				{
+					"title": "Soft-skills training delivery",
+					"description": "Developed and delivered soft-skills trainings for direct and indirect networks, for sales representatives and middle management of the company.",
+					"achievements": ["1800+ people trained"],
+					"type": "non-tech",
+					"skillsImproved": ["adult learning processes", "group dynamics"],
+					"problemsAddressed": ["adult learning"],
+					"dateStart": "2010-05-01",
+					"dateEnd": "2015-01-05"
+				},
+				{
+					"title": "Mystery Shopping survey coordinator",
+					"description": "Coordinated the survey organization details with the company that was providing Mystery Shopping services and responsible for the final presentation. The survey consisted in filling in questionnaires after visits in our shops and aggregating the obtained data. Then, based on the results, the company had an clearer understanding of the current reality of sales processes and took concrete action steps in order to improve the sales processes.",
+					"achievements": ["Significantly improved the presentation phase of the survey results by implementing visualization principles on data and by providing specific action steps based on the survey results. And as an emotional component, the general management liked the new format of presentation phase."],
+					"type": "non-tech",
+					"skillsImproved": [],
+					"problemsAddressed": ["provided qualitative interpretation of quantitative data", "simplified the reporting process"],
+					"dateStart": "2010-05-01",
+					"dateEnd": "2015-01-05"
+				}
+			]
+		},
+		{
+			"type": "volunteering",
+			"dateStart": "2009-04-01",
+			"dateEnd": "2009-11-01",
+			"place": "AIESEC Ukraine",
+			"title": "National Trainers' Coordinator",
+			"responsibilities": [
+				{
+					"title": "Responsible for development of Local Trainers Team in Local Committees of AIESEC in Ukraine",
+					"description": "",
+					"tech": {},
+					"achievements": "",
+					"type": "non-tech",
+					"skillsImproved": [],
+					"problemsAddressed": ["lack of capable people to spread the organizational knowledge throughout each local committee"],
+					"dateStart": "2012-01-10",
+					"dateEnd": "2015-01-05"
+				},
+				{
+					"title": "Developed Member Educational Cycle for AIESEC in Ukraine members",
+					"description": "The document consisted of eligible opportunities per general and per each functional area (HR, External Relations, Communication, etc.) for members at each level of their AIESEC experience.",
+					"tech": {},
+					"achievements": "An approved document that was put in use by the Member Committee of AIESEC in Ukraine.",
+					"type": "non-tech",
+					"skillsImproved": [],
+					"problemsAddressed": ["ensuring consistency of education of organization members", "standardizing core educational knowledge on the organization level"],
+					"dateStart": "2010-09-01",
+					"dateEnd": "2011-06-01"
+				},
+				{
+					"title": "Agenda and Conference manager at the Train the Trainers conferences",
+					"description": "TTT",
+					"achievements": ["1800+ people trained"],
+					"type": "non-tech",
+					"skillsImproved": ["adult learning processes", "group dynamics"],
+					"problemsAddressed": ["ensuring consistency of education of organization members", "train more people able to deliver knowledge"],
+					"dateStart": "2010-05-01",
+					"dateEnd": "2015-01-05"
+				},
+				{
+					"title": "Mystery Shopping survey coordinator",
+					"description": "Coordinated the survey organization details with the company that was providing Mystery Shopping services and responsible for the final presentation. The survey consisted in filling in questionnaires after visits in our shops and aggregating the obtained data. Then, based on the results, the company had an clearer understanding of the current reality of sales processes and took concrete action steps in order to improve the sales processes.",
+					"achievements": ["Significantly improved the presentation phase of the survey results by implementing visualization principles on data and by providing specific action steps based on the survey results. And as an emotional component, the general management liked the new format of presentation phase."],
+					"type": "non-tech",
+					"skillsImproved": [],
+					"problemsAddressed": ["provided qualitative interpretation of quantitative data", "simplified the reporting process"],
+					"dateStart": "2010-05-01",
+					"dateEnd": "2015-01-05"
+				}
+			]
+		},
+		{
+			"type": "volunteering",
+			"dateStart": "2014-11-01",
+			"dateEnd": "2016-04-14",
+			"place": "TEDxChisinau",
+			"title": "Speakers Coach",
+			"responsibilities": [
+				{
+					"title": "Speakers Coach",
+					"description": "Contacting potential speakers for the event, coaching them and working with them on the structure of the presentation.",
+					"achievements": "",
+					"tech": {},
+					"type": "non-tech",
+					"skillsImproved": [],
+					"problemsAddressed": []
+				},
+				{
+					"title": "Event host",
+					"description": "Together with TEDxChisinau curator, we were the hosts of TEDxChisinau: Crossroads event on the 25th of May, 2015.",
+					"achievements": "",
+					"tech": {},
+					"type": "non-tech",
+					"skillsImproved": [],
+					"problemsAddressed": []
+				}
+			]
+		},
+		{
+			"type": "paidJob",
+			"dateStart": "2013-02-01",
+			"dateEnd": "-",
+			"place": "Technical University of Moldova",
+			"title": "Lecturer",
+			"responsibilities": [
+				{
+					"title": "Delivering lectures to the English speaking group at IT specialty."
+				}
+			]
+		}
+	],
+	"learning": [
+		{
+			"type": "face2face",
+			"dateStart": "2006-09-01",
+			"dateEnd": "2010-07-01",
+			"place": "Technical University of Moldova",
+			"specialty": "Computer Science",
+			"responsibilities": [
+				{
+					"tech": {
+						"java": []
+					}
+				}
+			],
+			"title": "Student"
+		},
+		{
+			"type": "online",
+			"dateStart": "2013-08-12",
+			"dateEnd": "2014-02-01",
+			"place": "coursera.org",
+			"title": "Student",
+			"course": "Social Psychology"
+		},
+		{
+			"type": "online",
+			"dateStart": "2012-12-17",
+			"dateEnd": "2013-03-14",
+			"place": "coursera.org",
+			"title": "Student",
+			"course": "Model Thinking"
+		},
+		{
+			"type": "online",
+			"dateStart": "2012-10-15",
+			"dateEnd": "2012-12-06",
+			"place": "coursera.org",
+			"title": "Student",
+			"course": "Gamification"
+		},
+		{
+			"type": "online",
+			"dateStart": "2014-07-28",
+			"dateEnd": "2014-10-02",
+			"place": "coursera.org",
+			"title": "Student",
+			"course": "Introduction to Neuroeconomics: How the Brain Makes Decisions"
+		},
+		{
+			"type": "online",
+			"dateStart": "2015-11-29",
+			"dateEnd": "2016-01-10",
+			"place": "coursera.org",
+			"title": "Student",
+			"course": "Machine Learning: Regression"
+		},
+		{
+			"type": "online",
+			"dateStart": "2016-03-05",
+			"dateEnd": "2016-04-24",
+			"place": "coursera.org",
+			"title": "Student",
+			"course": "Machine Learning: Classification"
+		},
+		{
+			"type": "online",
+			"dateStart": "2015-09-22",
+			"dateEnd": "2015-11-09",
+			"place": "coursera.org",
+			"title": "Student",
+			"course": "Machine Learning Foundations: A Case Study Approach"
+		},
+		{
+			"type": "online",
+			"dateStart": "2015-11-23",
+			"dateEnd": "2015-12-28",
+			"place": "coursera.org",
+			"title": "Student",
+			"course": "Data Manipulation at Scale: Systems and Algorithms"
+		}
+
+	]
+}
