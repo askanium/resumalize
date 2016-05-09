@@ -17,6 +17,7 @@ var resumalize = function(container, configuration) {
     var config = {
         chartHeight					: 200,
         slopeChartHeight			: 200,
+        slopeLeftMargin 			: 30,
         margin                      : {top: 10, right: 20, bottom: 30, left: 20},
         mainChartPercentageWidth    : 1,
         minGapWidth                 : 200,
@@ -415,6 +416,11 @@ var resumalize = function(container, configuration) {
         return result;
     }
 
+    /**
+     * Either draw a slope chart with the responsibilities that map to the problems addressed, or display a table with
+     * all the responsibilities and their corresponding achievements, depending on what data is available.
+     * @param {Object} item - The work/learning item data from the resumalize data.
+     */
     function updateItemResponsibilityDetails ( item ) {
 
         // Example taken from https://bl.ocks.org/mbostock/7555321 and adjusted for labels placed in a column.
@@ -569,14 +575,14 @@ var resumalize = function(container, configuration) {
          * @returns {number} The width of the gap in pixels.
          */
         function checkMarginsAndGetWidth ( margins ) {
-            var w = window.innerWidth; // * .69; // TODO check it for browser compatibility
+            var w = window.innerWidth - config.slopeLeftMargin;  // TODO check it for browser compatibility
             var slopeChartWidth = config.minGapWidth;
-            if ( w < margins.right + margins.left + config.minGapWidth + 50 ) {  // add 50 to account for the axis labels padding
-                var ratio = w / (margins.right + margins.left + config.minGapWidth + 50);
+            if ( w < margins.right + margins.left + config.minGapWidth ) {  // add 50 to account for the axis labels padding
+                var ratio = w / (margins.right + margins.left + config.minGapWidth);
                 margins.right *= ratio;
                 margins.left *= ratio;
             } else {
-                slopeChartWidth = w - margins.right - margins.left - 50;  // subtract 25 to account for left axis labels margin and scrollbar
+                slopeChartWidth = w - margins.right - margins.left - config.slopeLeftMargin;
             }
             return slopeChartWidth;
         }
@@ -602,7 +608,7 @@ var resumalize = function(container, configuration) {
 
             var r2pG = r2pSlopegraph.append('g')
                 .attr('class', 'g_slope')
-                .attr('transform', 'translate(' + (slopeChartMargins.left + 10) + ',25)');
+                .attr('transform', 'translate(' + (slopeChartMargins.left + config.slopeLeftMargin) + ',25)');
 
             r2pG.append('text')
                 .attr('x', bottomScale(0) - 9)
