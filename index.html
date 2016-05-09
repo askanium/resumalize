@@ -17,5 +17,17 @@
     </svg>
     <script src="//d3js.org/d3.v3.min.js" charset="utf-8"></script>
     <script src="resumalize.js" type="application/javascript"></script>
+    <script type="text/javascript">
+        document.addEventListener( 'DOMContentLoaded', function () {
+            var resumalizeChart;
+            var resumalizeDom = document.getElementById('resumalize');
+
+            d3.json('resumalize.json', function (error, data) {
+                resumalizeChart = resumalize(resumalizeDom, {});
+                resumalizeChart.render(data);
+            });
+
+        }, false );
+    </script>
 </body>
 </html>

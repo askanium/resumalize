@@ -1,17 +1,5 @@
 'use strict';
 
-document.addEventListener( 'DOMContentLoaded', function () {
-    var resumalizeChart;
-    var resumalizeDom = document.getElementById('resumalize');
-
-    d3.json('resumalize.json', function (error, data) {
-        resumalizeChart = resumalize(resumalizeDom, {});
-        resumalizeChart.render(data);
-    });
-
-}, false );
-
-
 var resumalize = function(container, configuration) {
     var that = {};
     var config = {
@@ -56,7 +44,6 @@ var resumalize = function(container, configuration) {
 
     var x = undefined;
     var y = undefined;
-    //var area = undefined;
     var itemAreasGenerator = undefined;
     var tooltip = undefined;
 
