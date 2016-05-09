@@ -50,7 +50,7 @@
 					"dateEnd": "2015-01-05"
 				},
 				{
-					"title": "Developed a desktop program that simplified search of the information regarding offers / procedures / processes and documents created in 5 years",
+					"title": "Developed a desktop program that simplified search of the information created in over 5 years",
 					"description": "The program consisted of a user interface where the user entered some keywords and the program was searching for these keywords in an excel document that was updated with new keywords for every new information document published. This decision of using an excel doc was dictated by the requirement of not having a database and because of the fact that all the docs were in pdf format and searching through several hundreds of pdf files would last longer than needed. The result was a list of documents with matched keywords that the user could open from within the program.",
 					"tech": {
 						"java": ["javase"]
@@ -145,7 +145,7 @@
 				{
 					"title": "Speakers Coach",
 					"description": "Contacting potential speakers for the event, coaching them and working with them on the structure of the presentation.",
-					"achievements": "",
+					"achievements": ["organized the best event (as per that time)", "coached 12 speakers"],
 					"tech": {},
 					"type": "non-tech",
 					"skillsImproved": [],
@@ -153,8 +153,8 @@
 				},
 				{
 					"title": "Event host",
-					"description": "Together with TEDxChisinau curator, we were the hosts of TEDxChisinau: Crossroads event on the 25th of May, 2015.",
-					"achievements": "",
+					"description": "Together with TEDxChisinau curator, we were the hosts of the big TEDxChisinau: Crossroads event on the 25th of May, 2015.",
+					"achievements": [],
 					"tech": {},
 					"type": "non-tech",
 					"skillsImproved": [],
@@ -182,13 +182,7 @@
 			"dateEnd": "2010-07-01",
 			"place": "Technical University of Moldova",
 			"specialty": "Computer Science",
-			"responsibilities": [
-				{
-					"tech": {
-						"java": []
-					}
-				}
-			],
+			"responsibilities": [],
 			"title": "Student"
 		},
 		{

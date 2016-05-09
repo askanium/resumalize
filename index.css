@@ -70,3 +70,28 @@ rect.timeline-rect {
     font-size: 85%;
     color: #333;
 }
+
+.responsibility-row, .responsibility-header {
+    padding: 6px;
+    font-size: 90%;
+    color: #333;
+}
+.responsibility-title {
+    display: inline-block;
+    font-weight: 700;
+    vertical-align: middle;
+    width: 20%;
+}
+.responsibility-description {
+    display: inline-block;
+    vertical-align: middle;
+    width: 55%;
+}
+.responsibility-achievements {
+    display: inline-block;
+    vertical-align: middle;
+    width: 25%;
+}
+.responsibility-achievements ul {
+    margin: 0;
+}

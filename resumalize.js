@@ -19,6 +19,7 @@ var resumalize = function(container, configuration) {
         slopeChartHeight			: 200,
         margin                      : {top: 10, right: 20, bottom: 30, left: 20},
         mainChartPercentageWidth    : 1,
+        minGapWidth                 : 200,
 
         transitionMs				: 4000,
         xTickFormat					: d3.time.format('%Y'),
@@ -335,7 +336,7 @@ var resumalize = function(container, configuration) {
                 }
             }
 
-            // TODO compute period based on all experiences
+            // TODO compute period based on all experiences (that might overlap)
             var period = new Date(item.dateEnd).getTime() - new Date(item.dateStart).getTime();
             // Initialize the object where the mapping will live.
             item.slopeChartData = [];
@@ -351,7 +352,6 @@ var resumalize = function(container, configuration) {
                     }
                 })
             }
-            console.log(tech);
         }
 
         ///////////////////////////////////////////////////////////////////////////////
@@ -380,18 +380,22 @@ var resumalize = function(container, configuration) {
         });
     }
 
+    function formatDate ( date ) {
+        var monthNamesShort = ['', 'Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun', 'Jul', 'Aug', 'Sep', 'Oct', 'Nov', 'Dec'];
+        return date === config.noEndDateCharacter ? 'present' : monthNamesShort[parseInt(date.substr(5, 2))] + ' ' + date.substr(0, 4);
+    }
+
     /**
      * Get the html content for the tooltip.
      * @param {Object} item - The work/learning item from resumalize data.
      * @returns {string} The html content to be inserted into the tooltip.
      */
     function getTooltipHtml ( item ) {
-        var monthNamesShort = ['', 'Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun', 'Jul', 'Aug', 'Sep', 'Oct', 'Nov', 'Dec'];
-        var startDate = monthNamesShort[parseInt(item.dateStart.substr(5, 2))] + ' ' + item.dateStart.substr(0, 4);
-        var endDate = item.dateEnd === config.noEndDateCharacter ? 'present' : monthNamesShort[parseInt(item.dateEnd.substr(5, 2))] + ' ' + item.dateEnd.substr(0, 4);
+        var startDate = formatDate(item.dateStart);
+        var endDate = formatDate(item.dateEnd);
         var result = '<div class="title"><strong>' + item.title + '</strong></div>' +
                 '<div><strong>Place: </strong>' + item.place + '</div>' +
-                '<div><strong>Period: </strong>' + startDate + ' - ' + endDate + '</div>';
+                '<div><strong>Period: </strong>' + startDate + ' — ' + endDate + '</div>';
 
         if ( item.course ) {
             result += '<div><strong>Course: </strong>' + item.course + '</div>';
@@ -411,7 +415,7 @@ var resumalize = function(container, configuration) {
         return result;
     }
 
-    function updateResponsibilitiesToProblemsAddressedSlopegraph ( item ) {
+    function updateItemResponsibilityDetails ( item ) {
 
         // Example taken from https://bl.ocks.org/mbostock/7555321 and adjusted for labels placed in a column.
         function wrap ( text, width, side ) {
@@ -501,8 +505,18 @@ var resumalize = function(container, configuration) {
             });
         }
 
+        /**
+         * Compute the left and right margins necessary to display each label in one row.
+         * @param item
+         * @returns {{left: number, right: number}}
+         */
         function computeMargins ( item ) {
 
+            /**
+             * Compute the necessary width in pixels for a list of labels.
+             * @param {Array} listOfLabels - An array of list of labels that are strings.
+             * @returns {number} The max width necessary to display the longest label.
+             */
             function computeMargin ( listOfLabels ) {
                 var margin = 0;
 
@@ -545,140 +559,191 @@ var resumalize = function(container, configuration) {
             };
         }
 
+        /**
+         * Compute the gap between the left and right axes in the slope chart.
+         * First, check whether the left and right margins and the min gap width between them fits the available width of the chart.
+         * In case it is wider that the available width, adjust margins accordingly and leave the gap at min width.
+         * The algorithm is a simple one: compute the ratio of available width / necessary width and shorten them proportionally.
+         * In case the margins are shorter than the available width, compute the gap to fill the available width.
+         * @param {Object} margins - The right and left margins necessary to display the slopegraph's labels each per one row.
+         * @returns {number} The width of the gap in pixels.
+         */
         function checkMarginsAndGetWidth ( margins ) {
-            var w = window.innerWidth * .69; // TODO check it for browser compatibility
-            var minGapWidth = 200;
-            var availableMargin = w - minGapWidth;
-            var slopeChartWidth = minGapWidth;
-            if ( w < margins.right + margins.left + minGapWidth + 50 ) {  // add 50 to account for the axis labels padding
-                if ( margins.right >= 2 * margins.left ) {
-                    margins.right = availableMargin * 2 / 3;
-                    margins.left = availableMargin - margins.right;
-                } else if ( margins.left >= 2 * margins.right ) {
-                    margins.left = availableMargin * 2 / 3;
-                    margins.right = availableMargin - margins.left;
-                } else {
-                    var ratio = w / (margins.right + margins.left + minGapWidth + 50);
-                    margins.right *= ratio;
-                    margins.left *= ratio;
-                }
+            var w = window.innerWidth; // * .69; // TODO check it for browser compatibility
+            var slopeChartWidth = config.minGapWidth;
+            if ( w < margins.right + margins.left + config.minGapWidth + 50 ) {  // add 50 to account for the axis labels padding
+                var ratio = w / (margins.right + margins.left + config.minGapWidth + 50);
+                margins.right *= ratio;
+                margins.left *= ratio;
             } else {
                 slopeChartWidth = w - margins.right - margins.left - 25;  // subtract 25 to account for left axis labels margin
             }
             return slopeChartWidth;
         }
 
-        var slopeChartMargins = computeMargins(item);
-        var slopeChartWidth = checkMarginsAndGetWidth(slopeChartMargins);
-        var responsibilityTitles = item.responsibilities.map(function (d) { return d.title; });
-        var maxNrOfLabels = responsibilityTitles.length > item.addressedProblems.length
-            ? responsibilityTitles.length
-            : item.addressedProblems.length;
-        config.slopeChartHeight = 40 * maxNrOfLabels;
-        leftScale.domain(responsibilityTitles).rangeRoundBands([0, config.slopeChartHeight - config.margin.top - config.margin.bottom], .3);
-        rightScale.domain(item.addressedProblems).rangeRoundBands([0, config.slopeChartHeight - config.margin.top - config.margin.bottom], .3);
+        /**
+         * Draws a slope chart that visualizes the connection between the responsibilities and problems addressed by them.
+         * @param {Object} item - An experience item from the resumalize json data.
+         */
+        function drawSlopeChart ( item ) {
+            var slopeChartMargins = computeMargins(item);
+            var slopeChartWidth = checkMarginsAndGetWidth(slopeChartMargins);
+            var responsibilityTitles = item.responsibilities.map(function (d) { return d.title; });
+            var maxNrOfLabels = responsibilityTitles.length > item.addressedProblems.length
+                ? responsibilityTitles.length
+                : item.addressedProblems.length;
+            config.slopeChartHeight = 40 * maxNrOfLabels;
+            leftScale.domain(responsibilityTitles).rangeRoundBands([0, config.slopeChartHeight - config.margin.top - config.margin.bottom], .3);
+            rightScale.domain(item.addressedProblems).rangeRoundBands([0, config.slopeChartHeight - config.margin.top - config.margin.bottom], .3);
 
-        bottomScale.range([0, slopeChartWidth]);
+            bottomScale.range([0, slopeChartWidth]);
 
-        d3.select('.r2pSlopegraph').attr('height', config.slopeChartHeight + 'px');
+            d3.select('.r2pSlopegraph').attr('height', config.slopeChartHeight + 'px');
 
+            var r2pG = r2pSlopegraph.append('g')
+                .attr('class', 'g_slope')
+                .attr('transform', 'translate(' + (slopeChartMargins.left + 10) + ',25)');
+
+            r2pG.append('text')
+                .attr('x', bottomScale(0) - 9)
+                .attr('y', -5)
+                .attr('class', 'slope-chart-label')
+                .style('text-anchor', 'end')
+                .text('Responsibilities');
+
+            r2pG.append('text')
+                .attr('x', bottomScale(1) + 9)
+                .attr('y', -5)
+                .attr('class', 'slope-chart-label')
+                .text('Problems addressed');
+
+            r2pG.append("g")
+                .attr("class", "y slope-left-axis")
+                .attr("transform", "translate(0,0)")
+                .call(leftScaleAxis)
+                .selectAll(".tick text")
+                .call(wrap, slopeChartMargins.left, -1)
+                .on('mouseover', function (d) {
+                    var leftLabels = d3.selectAll('.slope-left-axis .tick text');
+                    var rightLabels = d3.selectAll('.slope-right-axis .tick text');
+                    var emphasizedSlopeLines = item.slopeChartData.filter(function (x) { return x[0] === d; });
+                    var rightEmphasizedLabels = emphasizedSlopeLines.map(function (x) { return x[1]; });
+
+                    leftLabels.filter(function (x) { return d !== x; })
+                        .style('opacity', '0.3');
+
+                    rightLabels.filter(function (x) { return rightEmphasizedLabels.indexOf(x) === -1; })
+                        .style('opacity', '0.3');
+
+                    r2pSlopegraph.selectAll('.slope-line')
+                        .data(item.slopeChartData)
+                        .filter(function (x) { return x[0] !== d; })
+                        .style('stroke', '#ddd');
+                })
+                .on('mouseout', function () {
+                    d3.selectAll('.slope-left-axis .tick text').style('opacity', '1 ');
+                    d3.selectAll('.slope-right-axis .tick text').style('opacity', '1 ');
+                    d3.selectAll('.slope-line').style('stroke', '#999');
+                });
+
+            r2pG.append("g")
+                .attr("class", "y slope-right-axis")
+                .attr("transform", "translate(" + slopeChartWidth + ",0)")
+                .call(rightScaleAxis)
+                .selectAll(".tick text")
+                .call(wrap, slopeChartMargins.right, 1)
+                .on('mouseover', function (d) {
+                    var leftLabels = d3.selectAll('.slope-left-axis .tick text');
+                    var rightLabels = d3.selectAll('.slope-right-axis .tick text');
+                    var emphasizedSlopeLines = item.slopeChartData.filter(function (x) { return x[1] === d; });
+                    var leftEmphasizedLabels = emphasizedSlopeLines.map(function (x) { return x[0]; });
+
+                    leftLabels.filter(function (x) { return leftEmphasizedLabels.indexOf(x) === -1; })
+                        .style('opacity', '0.3');
+
+                    rightLabels.filter(function (x) { return d !== x; })
+                        .style('opacity', '0.3');
+
+                    r2pSlopegraph.selectAll('.slope-line')
+                        .data(item.slopeChartData)
+                        .filter(function (x) { return x[1] !== d; })
+                        .style('stroke', '#ddd');
+                })
+                .on('mouseout', function () {
+                    d3.selectAll('.slope-left-axis .tick text').style('opacity', '1');
+                    d3.selectAll('.slope-right-axis .tick text').style('opacity', '1');
+                    d3.selectAll('.slope-line').style('stroke', '#999');
+                });
+
+            r2pG.selectAll('.slope-line')
+                .data(item.slopeChartData)
+                .enter()
+                .append('line')
+                .attr('class', 'slope-line')
+                .attr('x1', 0)
+                .attr('y1', function (d) { return leftScale(d[0]) + leftScale.rangeBand() / 2; })
+                .attr('x2', slopeChartWidth)
+                .attr('y2', function (d) { return rightScale(d[1]) + rightScale.rangeBand() / 2; });
+        }
+
+        /**
+         * Update the text details of the work/learning item.
+         * @param {Array} responsibilities - The array of the responsibilities of the work/learning item.
+         */
+        function updateResponsibilityDetails ( responsibilities ) {
+
+            if ( responsibilities && responsibilities.length ) {
+                var headerDiv = placeDetailsDom.append('div').attr('class', 'responsibility-header');
+                headerDiv.append('div').attr('class', 'responsibility-title').html('Responsibility');
+                headerDiv.append('div').attr('class', 'responsibility-description').style('font-weight', 700).html('Description');
+                headerDiv.append('div').attr('class', 'responsibility-achievements').style('font-weight', 700).html('Achievements');
+
+                responsibilities.forEach(function (responsibility) {
+                    var responsibilityRow = placeDetailsDom.append('div')
+                        .attr('class', 'responsibility-row');
+
+                    responsibilityRow.append('div')
+                        .attr('class', 'responsibility-title')
+                        .html(responsibility.title);
+
+                    responsibilityRow.append('div')
+                        .attr('class', 'responsibility-description')
+                        .html(responsibility.description);
+
+                    var achievements = responsibilityRow.append('div')
+                        .attr('class', 'responsibility-achievements');
+
+                    if ( responsibility.achievements && responsibility.achievements.length ) {
+                        var list = achievements.append('ul');
+                        responsibility.achievements.forEach(function (achievement) {
+                            list.append('li').html(achievement);
+                        });
+                    }
+                });
+            }
+        }
+
+        // Remove any chart that was there.
         r2pSlopegraph.select('.g_slope').remove();
 
-        var r2pG = r2pSlopegraph.append('g')
-            .attr('class', 'g_slope')
-            .attr('transform', 'translate(' + (slopeChartMargins.left + 10) + ',25)');
+        // Remove any text details that were there.
+        placeDetailsDom.selectAll('*').remove();
 
-        r2pG.append('text')
-            .attr('x', bottomScale(0) - 9)
-            .attr('y', -5)
-            .attr('class', 'slope-chart-label')
-            .style('text-anchor', 'end')
-            .text('Responsibilities');
+        // If there exist addressed problems, draw the slope chart, otherwise, display the details of the item as a table.
+        if ( item.addressedProblems.length ) {
+            drawSlopeChart(item);
+        } else {
+            updateResponsibilityDetails(item.responsibilities);
+        }
 
-        r2pG.append('text')
-            .attr('x', bottomScale(1) + 9)
-            .attr('y', -5)
-            .attr('class', 'slope-chart-label')
-            .text('Problems addressed');
-
-        r2pG.append("g")
-            .attr("class", "y slope-left-axis")
-            .attr("transform", "translate(0,0)")
-            .call(leftScaleAxis)
-            .selectAll(".tick text")
-            .call(wrap, slopeChartMargins.left, -1)
-            .on('mouseover', function (d) {
-                var leftLabels = d3.selectAll('.slope-left-axis .tick text');
-                var rightLabels = d3.selectAll('.slope-right-axis .tick text');
-                var emphasizedSlopeLines = item.slopeChartData.filter(function (x) { return x[0] === d; });
-                var rightEmphasizedLabels = emphasizedSlopeLines.map(function (x) { return x[1]; });
-
-                leftLabels.filter(function (x) { return d !== x; })
-                    .style('opacity', '0.3');
-
-                rightLabels.filter(function (x) { return rightEmphasizedLabels.indexOf(x) === -1; })
-                    .style('opacity', '0.3');
-
-                r2pSlopegraph.selectAll('.slope-line')
-                    .data(item.slopeChartData)
-                    .filter(function (x) { return x[0] !== d; })
-                    .style('stroke', '#ddd');
-            })
-            .on('mouseout', function () {
-                d3.selectAll('.slope-left-axis .tick text').style('opacity', '1 ');
-                d3.selectAll('.slope-right-axis .tick text').style('opacity', '1 ');
-                d3.selectAll('.slope-line').style('stroke', '#999');
-            });
-
-        r2pG.append("g")
-            .attr("class", "y slope-right-axis")
-            .attr("transform", "translate(" + slopeChartWidth + ",0)")
-            .call(rightScaleAxis)
-            .selectAll(".tick text")
-            .call(wrap, slopeChartMargins.right, 1)
-            .on('mouseover', function (d) {
-                var leftLabels = d3.selectAll('.slope-left-axis .tick text');
-                var rightLabels = d3.selectAll('.slope-right-axis .tick text');
-                var emphasizedSlopeLines = item.slopeChartData.filter(function (x) { return x[1] === d; });
-                var leftEmphasizedLabels = emphasizedSlopeLines.map(function (x) { return x[0]; });
-
-                leftLabels.filter(function (x) { return leftEmphasizedLabels.indexOf(x) === -1; })
-                    .style('opacity', '0.3');
-
-                rightLabels.filter(function (x) { return d !== x; })
-                    .style('opacity', '0.3');
-
-                r2pSlopegraph.selectAll('.slope-line')
-                    .data(item.slopeChartData)
-                    .filter(function (x) { return x[1] !== d; })
-                    .style('stroke', '#ddd');
-            })
-            .on('mouseout', function () {
-                d3.selectAll('.slope-left-axis .tick text').style('opacity', '1');
-                d3.selectAll('.slope-right-axis .tick text').style('opacity', '1');
-                d3.selectAll('.slope-line').style('stroke', '#999');
-            });
-
-        //r2pSlopegraph.append("g")
-        //    .attr("class", "x slope-bottom-axis")
-        //    .attr("transform", "translate(0," + config.slopeChartHeight + ")")
-        //    .call(bottomScaleAxis);
-
-        r2pG.selectAll('.slope-line')
-            .data(item.slopeChartData)
-            .enter()
-            .append('line')
-            .attr('class', 'slope-line')
-            .attr('x1', 0)
-            .attr('y1', function (d) { return leftScale(d[0]) + leftScale.rangeBand() / 2; })
-            .attr('x2', slopeChartWidth)
-            .attr('y2', function (d) { return rightScale(d[1]) + rightScale.rangeBand() / 2; })
     }
 
     function configure ( configuration ) {
         var prop;
         for ( prop in configuration ) {
-            config[prop] = configuration[prop];
+            if ( configuration.hasOwnProperty(prop) ) {
+                config[prop] = configuration[prop];
+            }
         }
 
         width = (d3.select(container).node().offsetWidth - config.margin.left - config.margin.right) * config.mainChartPercentageWidth;
@@ -819,11 +884,11 @@ var resumalize = function(container, configuration) {
             .on('click', function (d) {
                 d3.selectAll('.selected').remove();
                 d3.select(this).append('path')
-                    .attr('d', d3.roundPathCorners(itemAreasGenerator(d.chartCoords), 5, [Math.round(x(new Date(maxDate)))]))
+                    .attr('d', d3.roundPathCorners(itemAreasGenerator(d.chartCoords), 5, [x(new Date(maxDate))]))
                     .attr('class', 'workPolygon selected')
                     .style('fill', 'url(#dots-1) #ddd');
-                placeTitleDom.html('<h2>"' + d.title + '" at ' + d.place + '</h2>');
-                updateResponsibilitiesToProblemsAddressedSlopegraph(d);
+                placeTitleDom.html('<h2>"' + d.title + '" at ' + d.place + '</h2><h3>' + formatDate(d.dateStart) + ' — ' + formatDate(d.dateEnd) + '</h3>');
+                updateItemResponsibilityDetails(d);
             });
 
         learningPlace = svg.selectAll('.learningPlace')
@@ -835,7 +900,7 @@ var resumalize = function(container, configuration) {
         learningPlace
             .append('path')
             .attr('class', 'learningPolygon')
-            .attr('d', function (d) { return d3.roundPathCorners(itemAreasGenerator(d.chartCoords), 5, [Math.round(x(new Date(maxDate)))]); })
+            .attr('d', function (d) { return d3.roundPathCorners(itemAreasGenerator(d.chartCoords), 5, [x(new Date(maxDate))]); })
             .attr('fill', function (d) {
                 return learningColors((d.course || d.place));
             })
@@ -858,9 +923,11 @@ var resumalize = function(container, configuration) {
             .on('click', function (d) {
                 d3.selectAll('.selected').remove();
                 d3.select(this).append('path')
-                    .attr('d', d3.roundPathCorners(itemAreasGenerator(d.chartCoords), 5, [Math.round(x(new Date(maxDate)))]))
+                    .attr('d', d3.roundPathCorners(itemAreasGenerator(d.chartCoords), 5, [x(new Date(maxDate))]))
                     .attr('class', 'learningPolygon selected')
                     .style('fill', 'url(#dots-1) #ddd');
+                placeTitleDom.html('<h2>"' + d.title + '" at ' + d.place + '</h2><h3>' + formatDate(d.dateStart) + ' — ' + formatDate(d.dateEnd) + '</h3>');
+                updateItemResponsibilityDetails(d);
             });
 
         timeline = svg.append('g').attr('class', 'timeline');
