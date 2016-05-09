@@ -37,6 +37,7 @@ var resumalize = function(container, configuration) {
 
     var minDate = new Date().toJSON();
     var maxDate = '1970-01-01';
+    var currentDate = new Date();
 
     var itemProps = [config.workItemsLabel, config.learningItemsLabel];
     var colors = {
@@ -109,10 +110,10 @@ var resumalize = function(container, configuration) {
             data[prop].forEach(function ( xpItem ) {
                 minDate = minDate > xpItem.dateStart ? xpItem.dateStart : minDate;
                 maxDate = xpItem.dateEnd === config.noEndDateCharacter
-                    ? new Date().toJSON()
+                    ? currentDate.toJSON()
                     : (maxDate < xpItem.dateEnd
                         ? xpItem.dateEnd
-                    : maxDate);
+                        : maxDate);
             });
         });
         minDate = new Date(parseInt(minDate), 0, 1, 12, 0, 1).toJSON();  // To account for timezones. Otherwise it can go a year before.
@@ -128,8 +129,8 @@ var resumalize = function(container, configuration) {
     function getAreaObjectForItem ( item, prop ) {
         var dateStart = new Date(item.dateStart),
             startAsc = new Date(item.dateStart),
-            dateEnd = item.dateEnd === '-' ? new Date() : new Date(item.dateEnd),
-            endAsc = item.dateEnd === '-' ? new Date() : new Date(item.dateEnd),
+            dateEnd = item.dateEnd === config.noEndDateCharacter ? currentDate : new Date(item.dateEnd),
+            endAsc = item.dateEnd === config.noEndDateCharacter ? currentDate : new Date(item.dateEnd),
             areaObjPoints = [],
             nrOfDays = 0,
             layer = 0,
