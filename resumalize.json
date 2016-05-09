@@ -6,6 +6,7 @@
 			"dateEnd": "-",
 			"place": "Spark Research Labs",
 			"title": "Head of Technology",
+			"keyFigures": ["Developed 3 SaaS commercial products", "Mentor and technical agenda responsible for an IT summer camp"],
 			"responsibilities": [
 				{
 					"title": "Product development",
@@ -52,7 +53,7 @@
 			"dateEnd": "2015-01-05",
 			"place": "Orange Moldova S.A.",
 			"title": "Training & Quality of Sales Coordinator",
-			"keyFigures": ["1200+ hours of training", "1800+ people trained", "3 team-building events delivered"],
+			"keyFigures": ["1200+ hours of training", "1800+ people trained", "3 team-building events delivered", "Developed eLearning training modules passed by 1500+ employees", "Developed a dashboard used by Sales Department"],
 			"responsibilities": [
 				{
 					"title": "Developed an internal Quality of Sales Dashboard",
@@ -88,7 +89,7 @@
 					"achievements": ["1800+ people trained"],
 					"type": "non-tech",
 					"skillsImproved": ["adult learning processes", "group dynamics"],
-					"problemsAddressed": ["adult learning"],
+					"problemsAddressed": ["talent development", "quality of sales processes improvement"],
 					"dateStart": "2010-05-01",
 					"dateEnd": "2015-01-05"
 				},
@@ -110,6 +111,7 @@
 			"dateEnd": "2009-11-01",
 			"place": "AIESEC Ukraine",
 			"title": "National Trainers' Coordinator",
+			"keyFigures": ["developed the Member Educational Cycle for the whole organization", "organized 1 international Train the Trainers conference"],
 			"responsibilities": [
 				{
 					"title": "Responsible for development of Local Trainers Team in Local Committees of AIESEC in Ukraine",
@@ -119,8 +121,8 @@
 					"type": "non-tech",
 					"skillsImproved": [],
 					"problemsAddressed": ["lack of capable people to spread the organizational knowledge throughout each local committee"],
-					"dateStart": "2012-01-10",
-					"dateEnd": "2015-01-05"
+					"dateStart": "2009-04-01",
+					"dateEnd": "2009-11-01"
 				},
 				{
 					"title": "Developed Member Educational Cycle for AIESEC in Ukraine members",
@@ -130,28 +132,18 @@
 					"type": "non-tech",
 					"skillsImproved": [],
 					"problemsAddressed": ["ensuring consistency of education of organization members", "standardizing core educational knowledge on the organization level"],
-					"dateStart": "2010-09-01",
-					"dateEnd": "2011-06-01"
+					"dateStart": "2009-04-01",
+					"dateEnd": "2009-08-01"
 				},
 				{
 					"title": "Agenda and Conference manager at the Train the Trainers conferences",
-					"description": "TTT",
-					"achievements": ["1800+ people trained"],
+					"description": "Responsible for the international Train the Trainers conference agenda development for the basic and advanced tracks.",
+					"achievements": [],
 					"type": "non-tech",
 					"skillsImproved": ["adult learning processes", "group dynamics"],
 					"problemsAddressed": ["ensuring consistency of education of organization members", "train more people able to deliver knowledge"],
-					"dateStart": "2010-05-01",
-					"dateEnd": "2015-01-05"
-				},
-				{
-					"title": "Mystery Shopping survey coordinator",
-					"description": "Coordinated the survey organization details with the company that was providing Mystery Shopping services and responsible for the final presentation. The survey consisted in filling in questionnaires after visits in our shops and aggregating the obtained data. Then, based on the results, the company had an clearer understanding of the current reality of sales processes and took concrete action steps in order to improve the sales processes.",
-					"achievements": ["Significantly improved the presentation phase of the survey results by implementing visualization principles on data and by providing specific action steps based on the survey results. And as an emotional component, the general management liked the new format of presentation phase."],
-					"type": "non-tech",
-					"skillsImproved": [],
-					"problemsAddressed": ["provided qualitative interpretation of quantitative data", "simplified the reporting process"],
-					"dateStart": "2010-05-01",
-					"dateEnd": "2015-01-05"
+					"dateStart": "2009-05-01",
+					"dateEnd": "2009-08-15"
 				}
 			]
 		},
