@@ -420,7 +420,7 @@ var resumalize = function(container, configuration) {
                     line = [],
                     y = text.attr("y"),
                     dy = parseFloat(text.attr("dy")),
-                    tspan = text.text(null).append("tspan").attr("x", side * 9).attr("y", y).attr("dy", dy + "em").style('font-size', '90%');
+                    tspan = text.text(null).append("tspan").attr("x", side * 9).attr("y", y).attr("dy", dy + "em");
                     tspanElements.push(tspan);
                 while (word = words.pop()) {
                     line.push(word);
@@ -430,7 +430,7 @@ var resumalize = function(container, configuration) {
                         tspan.text(line.join(" "));
                         line = [word];
                         tspan.attr('dy', dy + 'em');  // We do not change `dy` attr, thus stacking all tspan elements one on top of the other. The adjustment will be made later.
-                        tspan = text.append("tspan").attr("x", side * 9).attr("y", y).attr("dy", dy + "em").style('font-size', '90%').text(word);
+                        tspan = text.append("tspan").attr("x", side * 9).attr("y", y).attr("dy", dy + "em").text(word);
                         tspanElements.push(tspan);  // Add tspan elements for vertical adjustment later on
                     }
                 }
@@ -523,8 +523,6 @@ var resumalize = function(container, configuration) {
                         .attr('class', 'labelMeter')
                         .attr('x', 0)
                         .attr('y', 0)
-                        .style('font-size', '90%')
-                        .style('visibility', 'hidden')
                         .text(label);
 
                     textWidth = labelMeter[0][0].getComputedTextLength();
@@ -562,10 +560,10 @@ var resumalize = function(container, configuration) {
          * @returns {number} The width of the gap in pixels.
          */
         function checkMarginsAndGetWidth ( margins ) {
-            var w = window.innerWidth - config.slopeLeftMargin;  // TODO check it for browser compatibility
+            var w = d3.select(container).node().offsetWidth - config.slopeLeftMargin;
             var slopeChartWidth = config.minGapWidth;
-            if ( w < margins.right + margins.left + config.minGapWidth ) {  // add 50 to account for the axis labels padding
-                var ratio = w / (margins.right + margins.left + config.minGapWidth);
+            if ( w < margins.right + margins.left + config.minGapWidth ) {
+                var ratio = (w - config.minGapWidth - 20) / (margins.right + margins.left);  // subtract 20 to account for labels margin from the axis line
                 margins.right *= ratio;
                 margins.left *= ratio;
             } else {
@@ -869,9 +867,11 @@ var resumalize = function(container, configuration) {
             .on("mousemove", function () {
                 var item = d3.select(this);
                 var coords = d3.mouse(item.node());
+                var offsetLeft = d3.select(container).node().offsetLeft;
+                var offsetTop = d3.select(container).node().offsetTop;
                 return tooltip
-                    .style("top", (coords[1] + 10)+"px")
-                    .style("left",(coords[0] + 40)+"px");
+                    .style("top", (offsetTop + coords[1] + 10)+"px")
+                    .style("left",(offsetLeft + coords[0] + 40)+"px");
             })
             .on("mouseout", function () {
                 return tooltip.style("visibility", "hidden");
@@ -910,9 +910,11 @@ var resumalize = function(container, configuration) {
             .on("mousemove", function () {
                 var item = d3.select(this);
                 var coords = d3.mouse(item.node());
+                var offsetLeft = d3.select(container).node().offsetLeft;
+                var offsetTop = d3.select(container).node().offsetTop;
                 return tooltip
-                    .style("top", (coords[1] + 10)+"px")
-                    .style("left",(coords[0] + 40)+"px");
+                    .style("top", (offsetTop + coords[1] + 10)+"px")
+                    .style("left",(offsetLeft + coords[0] + 40)+"px");
             })
             .on("mouseout", function () {
                 return tooltip.style("visibility", "hidden");
@@ -936,18 +938,16 @@ var resumalize = function(container, configuration) {
             .attr('width', function() { return x(new Date(maxDate)) - x(timeLineTickValues[0]); })
             .attr('height', function () { return y(-4) - y(4); });
 
-        timelineYearValues = timeline.selectAll('.year')
+        timelineYearValues = timeline.selectAll('.year-label')
             .data(timeLineTickValues)
             .enter()
             .append('text')
-            .attr('class', 'year')
+            .attr('class', 'year-label')
             .attr('x', function (d) { return x(new Date(d.getFullYear(), d.getMonth() + 6, 1)); })
             .attr('y', function () { return y(0); })
             .text(function (d) { return d.getFullYear(); })
             .attr('text-anchor', 'middle')
-            .attr('dominant-baseline', 'central')
-            .style('fill', '#ffffff')
-            .style('font-size', '80%');
+            .attr('dominant-baseline', 'central');
 
         // Remove the first entry so that we won't have a separator at the beginning of the first year on the timeline.
         var dataForYearSeparators = timeLineTickValues.slice();
