@@ -9,7 +9,7 @@
 			"responsibilities": [
 				{
 					"title": "Product development",
-					"description": "Involved into the development process ",
+					"description": "Full stack development. Developed from A to Z 2 commercial Software as a Service (SaaS) products. Deployment on Amazon Web Services.",
 					"tech": {
 						"python": ["django", "django-rest-framework"],
 						"javascript": ["angular", "d3.js"],
@@ -17,10 +17,30 @@
 						"git": [],
 						"aws": []
 					},
-					"achievements": "",
+					"achievements": ["2 SaaS products developed"],
 					"type": "tech",
 					"skillsImproved": [],
-					"problemsAddressed": [],
+					"problemsAddressed": ["Cash inflow generation", "Product pipeline realization"],
+					"dateStart": "2015-01-05",
+					"dateEnd": "-"
+				},
+				{
+					"title": "Project management",
+					"description": "Development of the projects concept together with projects' owners.",
+					"achievements": [],
+					"type": "tech",
+					"skillsImproved": [],
+					"problemsAddressed": ["Cash inflow generation", "Product portfolio management"],
+					"dateStart": "2015-01-05",
+					"dateEnd": "-"
+				},
+				{
+					"title": "Talent development",
+					"description": "Pair programming and coaching of junior developers and evaluating their work.",
+					"achievements": [],
+					"type": "tech",
+					"skillsImproved": [],
+					"problemsAddressed": ["Employees development", "Product pipeline realization"],
 					"dateStart": "2015-01-05",
 					"dateEnd": "-"
 				}
@@ -170,7 +190,9 @@
 			"title": "Lecturer",
 			"responsibilities": [
 				{
-					"title": "Delivering lectures to the English speaking group at IT specialty."
+					"title": "Teaching the \"Ethics and Basics of Communication\" course for the English speaking group.",
+					"description": "The course consists of 3 modules: <br/>1. Brain (physiological and psychological aspects) - learning about 3 key aspects of brain functioning that help us live: attention, memory and senses; <br/>2. Ethics - with a focus on teamwork ethics, how to work in a team, what are the pitfalls; <br/>3. Presentation Skills - how to communicate your idea efficiently, how to use visual aids in your presentation, how to define a presentation goal and why it is important.",
+					"achievements": ["good evaluation score of the course given by students at the end of the year (evaluation made by the curator of the english speaking group)"]
 				}
 			]
 		}
