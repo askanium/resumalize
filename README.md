@@ -1,6 +1,8 @@
 # resumalize
 Visualize your resume!
 
+![resumalize example](https://github.com/iulian4ik/resumalize/blob/master/Resumalize_example.png)
+
 ##What is this
 
 **Resumalize** is a way to visualize your resume in a clear and simple manner. There are numerous services available
@@ -23,30 +25,30 @@ Both `work` and `learning` properties hold an array of objects.
 {
   "type": "paidJob|volunteering",
   "dateStart": "YYYY-MM-DD",
-  "dateEnd": "YYYY-MM-DD|-",  // Use a dash to indicate you are currently work/volunteer there
+  "dateEnd": "YYYY-MM-DD|- (here and later on - use a dash to indicate current date)",
   "place": "Company name",
   "title": "Your title",
-  "keyFigures": ["1200+ hours of training", "1800+ people trained"],  // (optional) These will appear in popup on mousemove.
+  "keyFigures": ["(optional property, will appear in popup)", "1200+ hours of training", "1800+ people trained"],
   "responsibilities": [
     {
       "title": "Short description of responsibility",
       "description": "Long description of your responsibility",
-      "tech": [  // (optional)
+      "tech": {
         "python": ["django", "django-rest-framework"],
         "javascript": ["angularjs", "jquery", "d3.js"],
         "postgresq": []
-      ],
+      },
       "achievements": ["a", "list", "of", "your", "achievements"],
-      "type": "tech|non-tech",  // currently not used
+      "type": "tech|non-tech (optional, currently not used)",
       "problemsAddressed": ["revenue generation", "talent development"],
       "dateStart": "YYYY-MM-DD",
-      "dateEnd": "YYYY-MM-DD|-",  // Use a dash to indicate you are currently work/volunteer there
+      "dateEnd": "YYYY-MM-DD|-",
 
     }
   ]
 }
 ```
-The `tech` property is an object that consists of "major" technologies which in their turn consist of a list of "derivative"
+The `tech` property is an optional property with an object that consists of "major" technologies which in their turn consist of a list of "derivative"
 technologies, such as frameworks or libraries. Currently the `tech`s aren't displayed anywhere - this is one of the items on the TODO list.
 
 
@@ -56,10 +58,10 @@ technologies, such as frameworks or libraries. Currently the `tech`s aren't disp
 {
   "type": "face2face|online",
   "dateStart": "YYYY-MM-DD",
-  "dateEnd": "YYYY-MM-DD|-",  // Use a dash to indicate you are currently studying there
+  "dateEnd": "YYYY-MM-DD|-",
   "place": "University/School name",
   "title": "Your title",
-  "specialty": "Your specialty"  // (optional) It will appear in popup on mousemove.
+  "specialty": "Your specialty (optional) It will appear in popup on mousemove."
 }
 ```
 
