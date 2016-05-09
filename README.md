@@ -8,6 +8,10 @@ Visualize your resume!
 **Resumalize** is a way to visualize your resume in a clear and simple manner. There are numerous services available
 online to build your resume, but I wanted something to embed on a site/blog and thus created it.
 
+##Dependencies
+
+-d3.js
+
 ##How to use it
 
 In order to visualize your resume, create a json with the proper structure with all your work/volunteering/learning
