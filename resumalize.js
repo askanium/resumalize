@@ -576,7 +576,7 @@ var resumalize = function(container, configuration) {
                 margins.right *= ratio;
                 margins.left *= ratio;
             } else {
-                slopeChartWidth = w - margins.right - margins.left - 25;  // subtract 25 to account for left axis labels margin
+                slopeChartWidth = w - margins.right - margins.left - 50;  // subtract 25 to account for left axis labels margin and scrollbar
             }
             return slopeChartWidth;
         }
@@ -874,9 +874,11 @@ var resumalize = function(container, configuration) {
                     .html(getTooltipHtml(d));
             })
             .on("mousemove", function () {
+                var item = d3.select(this);
+                var coords = d3.mouse(item.node());
                 return tooltip
-                    .style("top", (event.pageY-50)+"px")
-                    .style("left",(event.pageX+10)+"px");
+                    .style("top", (coords[1] + 10)+"px")
+                    .style("left",(coords[0] + 40)+"px");
             })
             .on("mouseout", function () {
                 return tooltip.style("visibility", "hidden");
@@ -913,9 +915,11 @@ var resumalize = function(container, configuration) {
                     .html(getTooltipHtml(d));
             })
             .on("mousemove", function () {
+                var item = d3.select(this);
+                var coords = d3.mouse(item.node());
                 return tooltip
-                    .style("top", (event.pageY-50)+"px")
-                    .style("left",(event.pageX+10)+"px");
+                    .style("top", (coords[1] + 10)+"px")
+                    .style("left",(coords[0] + 40)+"px");
             })
             .on("mouseout", function () {
                 return tooltip.style("visibility", "hidden");
