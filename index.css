@@ -1,4 +1,4 @@
-body {
+#resumalize {
     font-family: "Helvetica Neue", Helvetica, Arial, sans-serif;
     margin: auto;
     position: relative;
@@ -120,5 +120,5 @@ rect.timeline-rect {
     margin: 0;
 }
 .responsibility-achievements ul>li {
-    margin: 12px;
+    font-size: 12px;
 }
